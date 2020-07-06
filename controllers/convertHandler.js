@@ -52,7 +52,7 @@ function ConvertHandler() {
     if (isInvalidNum(num)) return null;
     const result = safeEval(num);
 
-    return Number(result.toFixed(5));
+    return Math.round(result * 100000) / 100000;
   };
 
   this.getUnit = (input) => {
@@ -107,7 +107,7 @@ function ConvertHandler() {
     const miToKm = 1.60934;
     let result;
 
-    switch (initUnit) {
+    switch (initUnit.toLowerCase()) {
       case "gal":
         result = initNum * galToL;
         break;
@@ -130,7 +130,7 @@ function ConvertHandler() {
         break;
     }
 
-    return Number(result.toFixed(5));
+    return Math.round(result * 100000) / 100000;
   };
 
   this.getString = (initNum, initUnit, returnNum, returnUnit) => {

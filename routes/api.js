@@ -16,21 +16,21 @@ module.exports = (app) => {
   app.route("/api/convert").get((req, res) => {
     const { input } = req.query;
 
-    if (!input) return res.json({ error: "Invalid number and unit" });
+    if (!input) return res.json({ error: "invalid number and unit" });
 
     const initNum = convertHandler.getNum(input);
     const initUnit = convertHandler.getUnit(input);
 
     if (initUnit && !initNum) {
-      return res.json({ error: "Invalid number" });
+      return res.json({ error: "invalid number" });
     }
 
     if (initNum && !initUnit) {
-      return res.json({ error: "Invalid unit" });
+      return res.json({ error: "invalid unit" });
     }
 
     if (!initNum && !initUnit) {
-      return res.json({ error: "Invalid number and unit" });
+      return res.json({ error: "invalid number and unit" });
     }
 
     const returnNum = convertHandler.convert(initNum, initUnit);
