@@ -8,6 +8,28 @@
 
 const safeEval = require("safe-eval");
 
+const units = ["gal", "l", "lbs", "kg", "mi", "km"];
+
+const isInvalidNum = (str) => {
+  let result = false;
+
+  if (/[^0-9./]/.test(str)) result = true;
+
+  if (/$([\D])/.test(str)) result = true;
+
+  if ((str.match(/\./g) || []).length > 1) result = true;
+
+  if ((str.match(/\//g) || []).length > 1) result = true;
+
+  try {
+    safeEval(str);
+  } catch (e) {
+    result = true;
+  }
+
+  return result;
+};
+
 const unitsMap = {
   gal: "l",
   l: "gal",
@@ -19,13 +41,27 @@ const unitsMap = {
 
 function ConvertHandler() {
   this.getNum = (input) => {
-    const result = safeEval(input);
+    let num;
+    const unitIndex = input.search(/[a-z]/i);
+
+    if (unitIndex === 0) return 1;
+
+    if (unitIndex > 0) num = input.slice(0, unitIndex);
+    else num = input.slice(0);
+
+    if (isInvalidNum(num)) return null;
+    const result = safeEval(num);
 
     return Number(result.toFixed(5));
   };
 
   this.getUnit = (input) => {
-    const result = input.toLowerCase();
+    const unitIndex = input.search(/[a-z]/i);
+    const unit = input.slice(unitIndex);
+
+    if (!units.includes(unit.toLowerCase())) return null;
+
+    const result = unit.toLowerCase();
 
     return result;
   };
