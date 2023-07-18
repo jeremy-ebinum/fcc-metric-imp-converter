@@ -19,7 +19,7 @@
 		"express": "^4.17.1",
 		"helmet": "^3.23.3",
 		"mocha": "^8.0.1",
-		"mongoose": "^5.8.11",
+		"mongoose": "^5.13.20",
 		"safe-eval": "^0.4.1",
 		"zombie": "^6.1.4"
 	},
